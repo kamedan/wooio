@@ -26,9 +26,9 @@ export class MenuPage {
     this.categories = [];
 
     this.WooCommerce = WC({
-      url: "http://afternoon-ravine-20342.herokuapp.com",
-      consumerKey: "ck_b11071b5f55c591fb96e5aa743dbed35904eb762",
-      consumerSecret: "cs_8d427f0177b797b333bbbd803ddebfb9beb21b41",
+      url: "http://shop7895.000webhostapp.com",
+      consumerKey: "ck_a4343f9fc555a69b21c85a61a658cd21050090fa",
+      consumerSecret: "cs_19dbe0df3d905a25946073cb8e35c1a302ae7aa6",
       wpAPI: true,
       version: 'wc/v2'
     });
