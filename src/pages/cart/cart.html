@@ -29,9 +29,9 @@
   <ion-list>
     <ion-item *ngFor="let item of cartItems; let i = index">
         <ion-thumbnail item-left>
-        <img [src]="item.product.featured_src" style="width: 60px !important; height: 60px !important;"/>
+        <img [src]="item.product.images[0].src" style="width: 60px !important; height: 60px !important;"/>
       </ion-thumbnail>
-      <h2>{{ item.product.title }}</h2>
+      <h2>{{ item.product.name }}</h2>
       <p>{{ item.qty }} • {{ item.product.price }}</p>
       <button ion-button clear item-right color="danger" (click)="removeFromCart(item, i)">
         <ion-icon name="close-circle"></ion-icon>
