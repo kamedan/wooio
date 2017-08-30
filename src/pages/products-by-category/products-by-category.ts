@@ -1,25 +1,30 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, Slides, ToastController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
  import {ProductDetailsPage} from '../product-details/product-details';
 
 import * as WC from 'woocommerce-api';
 
-@Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
-})
-export class HomePage {
+/**
+ * Generated class for the ProductsByCategoryPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
 
+@Component({
+  selector: 'page-products-by-category',
+  templateUrl: 'products-by-category.html',
+})
+export class ProductsByCategoryPage {
   WooCommerce: any;
   products: any[];
-  moreProducts: any[];
   page:number;
+  category:any;
 
-  @ViewChild('productSlides') productSlides: Slides;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
+    this.page = 1;
+    this.category = this.navParams.get("category");
 
-  constructor(public navCtrl: NavController, public toastCtrl:ToastController) {
-
-    this.page =2;
     this.WooCommerce = WC({
       url: "http://shop7895.000webhostapp.com",
       consumerKey: "ck_a4343f9fc555a69b21c85a61a658cd21050090fa",
@@ -28,38 +33,27 @@ export class HomePage {
       version: 'wc/v2'
     });
 
-    this.WooCommerce.getAsync("products").then((data) => {
+    this.WooCommerce.getAsync("products?filter[category]="+ this.category.slug).then((data) => {
       console.log(JSON.parse(data.body));
-      this.products = JSON.parse(data.body);
+      
+          this.products = JSON.parse(data.body);
     }, (err) => {
       console.log(err);
     });
 
-    this.loadMoreProducts(null);
-
   }
 
-  ionViewDidLoad(){
-    setInterval(()=>{
-      if(this.productSlides.getActiveIndex() == this.productSlides.length() -1){
-        this.productSlides.slideTo(0);
-      }
-      this.productSlides.slideNext();
-    },3000);
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ProductsByCategoryPage');
   }
 
   loadMoreProducts(event){
-    if(event == null)
-    {
-      this.page = 2;
-      this.moreProducts = [];
-    }else{
+    
       this.page++;
-    }
 
-    this.WooCommerce.getAsync("products?page="+this.page).then((data) => {
+    this.WooCommerce.getAsync("products?filter[category]="+ this.category.slug + "&page" +this.page).then((data) => {
       console.log(JSON.parse(data.body));
-      this.moreProducts = this.moreProducts.concat(JSON.parse(data.body));
+      this.products = this.products.concat(JSON.parse(data.body));
       if(event != null)
       {
         event.complete();
@@ -80,7 +74,6 @@ export class HomePage {
     });
 
   }
-
   openProductPage(product){
     this.navCtrl.push(ProductDetailsPage, {"product": product})
   }
