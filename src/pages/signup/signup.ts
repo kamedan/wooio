@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import * as WC from 'woocommerce-api';
+import {LoginPage} from '../login/login';
 
 /**
  * Generated class for the SignupPage page.
@@ -31,7 +32,7 @@ export class SignupPage {
       consumerKey: "ck_a4343f9fc555a69b21c85a61a658cd21050090fa",
       consumerSecret: "cs_19dbe0df3d905a25946073cb8e35c1a302ae7aa6",
       wpAPI: true,
-      version: 'wc/v3'
+      version: 'wc/v2'
     });
   }
 
@@ -49,7 +50,41 @@ export class SignupPage {
         customer : {}
       }
 
-      customerData.customer = {
+      let datac = {
+  email: this.newUser.email,
+  first_name: this.newUser.first_name,
+  last_name: this.newUser.last_name,
+  username: this.newUser.username,
+  password: this.newUser.password,
+  billing: {
+    first_name: this.newUser.first_name,
+    last_name: this.newUser.last_name,
+    company: '',
+    address_1: this.newUser.billing_address.address_1,
+    address_2: this.newUser.billing_address.address_2,
+    city: this.newUser.billing_address.city,
+    state: this.newUser.billing_address.state,
+    postcode: this.newUser.billing_address.postcode,
+    country: this.newUser.billing_address.country,
+    email: this.newUser.email,
+    phone: this.newUser.billing_address.phone
+  },
+  shipping: {
+    first_name: this.newUser.first_name,
+    last_name: this.newUser.last_name,
+    company: '',
+    address_1: this.newUser.shipping_address.address_1,
+    address_2: this.newUser.shipping_address.address_2,
+    city: this.newUser.shipping_address.city,
+    state: this.newUser.shipping_address.state,
+    postcode: this.newUser.shipping_address.postcode,
+    country: this.newUser.shipping_address.country,
+    email: this.newUser.email,
+    phone: this.newUser.shipping_address.phone
+  }
+};
+
+      /*customerData.customer = {
         "email": this.newUser.email,
         "first_name": this.newUser.first_name,
         "last_name": this.newUser.last_name,
@@ -80,6 +115,7 @@ export class SignupPage {
           "country": this.newUser.shipping_address.country
         }
       }
+      */
 
       if(this.billing_shipping_same){
         this.newUser.shipping_address = this.newUser.billing_address;
@@ -87,12 +123,12 @@ export class SignupPage {
 
       console.log(customerData);
 
-      this.WooCommerce.postAsync("customers", customerData).then( (data) => {
+      this.WooCommerce.postAsync('customers', datac).then( (data) => {
 
         let response = (JSON.parse(data.body));
         console.log(data);
 
-        if(response.customer){
+        if(response.id){
           this.alertCtrl.create({
             title: "Account Created",
             message: "Your account has been created successfully! Please login to proceed.",
@@ -100,6 +136,7 @@ export class SignupPage {
               text: "Login",
               handler: ()=> {
                 //TODO
+                this.navCtrl.push(LoginPage);
               }
             }]
           }).present();
