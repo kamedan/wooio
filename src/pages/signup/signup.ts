@@ -118,7 +118,7 @@ export class SignupPage {
       */
 
       if(this.billing_shipping_same){
-        this.newUser.shipping_address = this.newUser.billing_address;
+        this.newUser.shipping = this.newUser.billing;
       }
 
       console.log(customerData);
