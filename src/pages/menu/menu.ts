@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import {NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
 import {HomePage} from '../home/home';
 import {ProductsByCategoryPage} from '../products-by-category/products-by-category';
 import {CartPage} from '../cart/cart';
@@ -15,7 +15,7 @@ import * as WC from 'woocommerce-api';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-
+@IonicPage({})
 @Component({
   selector: 'page-menu',
   templateUrl: 'menu.html',
