@@ -29,7 +29,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      /*this.oneSignal.startInit('763e31a2-06fb-40d7-b27f-c0b08c09bc0f', '347479951243');
+      this.oneSignal.startInit('763e31a2-06fb-40d7-b27f-c0b08c09bc0f', '347479951243');
 
       this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
@@ -41,7 +41,7 @@ export class MyApp {
         // do something when a notification is opened
       });
 
-      this.oneSignal.endInit();*/
+      this.oneSignal.endInit();
     });
   }
 
