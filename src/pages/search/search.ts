@@ -33,7 +33,7 @@ export class SearchPage {
       version: 'wc/v2'
     });
 
-    this.WooCommerce.getAsync("products?filter[q]="+this.searchQuery).then((searchData) => {
+    this.WooCommerce.getAsync("products?search="+this.searchQuery).then((searchData) => {
       this.products = JSON.parse(searchData.body);
     })
   }
@@ -43,7 +43,7 @@ export class SearchPage {
   }
   loadMoreProducts(event){
 
-    this.WooCommerce.getAsync("products?filter[q]=" + this.searchQuery + "&page=" + this.page).then((searchData) => {
+    this.WooCommerce.getAsync("products?search=" + this.searchQuery + "&page=" + this.page).then((searchData) => {
       this.products = this.products.concat(JSON.parse(searchData.body));
 
       console.log(this.products);
